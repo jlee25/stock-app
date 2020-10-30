@@ -30,9 +30,9 @@ export const stockSlice = createSlice({
 
   export const getStocks = () => async dispatch => {
     try {
-      await axios.get("http://localhost:4000/api/stock").then((res) => {
+      await axios.get("http://localhost:5000/api/stocks").then((res) => {
           console.log('helloooo');
-          console.log('res');
+          console.log(res);
       })
     } catch (e) {
       return console.error(e.message);
