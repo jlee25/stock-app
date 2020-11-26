@@ -1,19 +1,99 @@
-import React from 'react'
-import { Charts, ChartContainer, ChartRow, YAxis, LineChart } from "react-timeseries-charts";
+import React from 'react';
+import ReactHighcharts from 'react-highcharts/ReactHighstock.src'
+import moment from 'moment'
 
 const StockChart = (props) => {
+    const { stockInfo } = props;
+    const options = {style: 'currency', currency: 'USD'};
+    const numberFormat = new Intl.NumberFormat('en-US', options);
+    console.log(stockInfo, 'infoo');
+    const configPrice = {
+        yAxis: [{
+          offset: 20,
+  
+          labels: {
+            formatter: function () {
+              return numberFormat.format(this.value) 
+            }
+            ,
+            x: -15,
+            style: {
+              "color": "#000", "position": "absolute"
+  
+            },
+            align: 'left'
+          },
+        },
+          
+        ],
+        tooltip: {
+          shared: true,
+          formatter: function () {
+            return numberFormat.format(this.y, 0) +  '</b><br/>' + moment(this.x).format('MMMM Do YYYY, h:mm')
+          }
+        },
+        plotOptions: {
+          series: {
+            showInNavigator: true,
+            gapSize: 6,
+  
+          }
+        },
+        chart: {
+            // backgroundColor: '#001529',
+            polar: true,
+            type: 'line',
+            height: 300,
+        },
+        scrollbar: {
+            enabled: false
+        },
+        navigator: {
+            enabled: false
+        },
+        credits: {
+          enabled: false
+        },
+        legend: {
+          enabled: false
+        },
+        xAxis: {
+          type: 'date',
+        },
+        rangeSelector: {
+          buttons: [{
+            type: 'day',
+            count: 7,
+            text: '7d'
+          }, {
+            type: 'month',
+            count: 1,
+            text: '1m'
+          }, {
+            type: 'month',
+            count: 3,
+            text: '3m'
+          },
+            {
+            type: 'all',
+            text: 'All'
+          }],
+          selected: 4
+        },
+        series: [{
+          name: 'Price',
+          type: 'spline',
+          color: '#1DA57A',
+          data: stockInfo.stockInfo,
+          tooltip: {
+            valueDecimals: 2
+          },
+    
+        }
+        ]
+      };
     return (
-        <div>hello</div>
-        // <ChartContainer timeRange={series1.timerange()} width={800}>
-        //     <ChartRow height="200">
-        //         <YAxis id="axis1" label="AUD" min={0.5} max={1.5} width="60" type="linear" format="$,.2f"/>
-        //         <Charts>
-        //             <LineChart axis="axis1" series={series1}/>
-        //             <LineChart axis="axis2" series={series2}/>
-        //         </Charts>
-        //         <YAxis id="axis2" label="Euro" min={0.5} max={1.5} width="80" type="linear" format="$,.2f"/>
-        //     </ChartRow>
-        // </ChartContainer>
+      <ReactHighcharts config = {configPrice}></ReactHighcharts>
     )
 }
 

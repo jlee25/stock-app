@@ -1,50 +1,77 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Skeleton, Switch, Card, Avatar, Col, Row } from 'antd';
+import { Typography, Skeleton, Switch, Card, Avatar, Col, Row, Spin, Carousel, Space } from 'antd';
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-import { Typography } from 'antd';
-import StockChart from './StockChart';
 import { getStocks, selectStock } from '../features/stockSlice';
+import StockCard from './StockCard';
 
 const MainContent = () => {
-    const dispatch = useDispatch();
+  const dispatch = useDispatch();
 
-    const { Meta } = Card;
-    const { Title } = Typography;
+  const { Meta } = Card;
+  const { Title } = Typography;
 
-    const stock = useSelector(selectStock);
+  const stockList = useSelector(selectStock);
 
-    useEffect(() => {
-        dispatch(getStocks());
-    }, [])
+  const [selectedDate, setSelectedDate] = useState("yearly")
+  const [selectedStocks, setSelectedStocks] = useState(["aapl", "msft", "KCE", "VERY"])
 
-    console.log(stock);
+  useEffect(() => {
+      dispatch(getStocks(selectedDate, selectedStocks));
+  }, [selectedDate, selectedStocks])
 
-    return (
-        !stock.loading ?
-        <div>
-          <Title level={2}>Top Stocks</Title>
-          <Row gutter={16}>
-            <Col span={8}>
-              <Card
-                hoverable
-                cover={<StockChart />}
-              >
-                <Meta title="AAPLE" description="AAPLE STOCK" />
-              </Card>
-            </Col>
-          </Row>
-        </div>
-        : <Skeleton loading={stock.loading} avatar active>
-            <Meta
-              avatar={
-                <Avatar src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
-              }
-              title="Card title"
-              description="This is the description"
-            />
-          </Skeleton>
-      );
+  const carouselSettings = {
+    arrows: true,
+    slidesToShow: 3,
+    slidesToScroll: 1,
+    responsive: [
+      {
+        breakpoint: 1024,
+        settings: {
+          slidesToShow: 2,
+          slidesToScroll: 3,
+          infinite: true,
+          dots: true
+        }
+      },
+      {
+        breakpoint: 600,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 2,
+          initialSlide: 2
+        }
+      },
+      {
+        breakpoint: 480,
+        settings: {
+          slidesToShow: 1,
+          slidesToScroll: 1
+        }
+      }
+    ]
+  };
+
+  return (
+    <div className="main-stocks">
+      <Title level={2}>Top Stocks</Title>
+      <div className="stock-card-container">
+          <Carousel {...carouselSettings}>
+            {stockList.stocks.map((stock, index) => {
+              return (
+                  <Space className="stock-card-space" size={8} >
+                    <StockCard 
+                      stockList={stock} 
+                      selectedDateType={selectedDate}
+                      loading={stockList.loading}
+                    />
+                  </Space>
+              )
+            })} 
+          </Carousel>
+      </div>
+    </div>
+  );
 }
 
 export default MainContent

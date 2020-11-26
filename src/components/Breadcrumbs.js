@@ -1,12 +1,12 @@
 import React from 'react'
 import { Breadcrumb } from 'antd';
 
-const Breadcrumbs = () => {
+const Breadcrumbs = (props) => {
     return (
         <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
+            <Breadcrumb.Item>Main</Breadcrumb.Item>
+            <Breadcrumb.Item>Stock</Breadcrumb.Item>
+            <Breadcrumb.Item>{props.stock ? props.stock : null}</Breadcrumb.Item>
         </Breadcrumb>
     )
 }

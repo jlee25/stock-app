@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 // import { Counter } from './features/counter/Counter';
 import Dashboard from './components/Dashboard';
+import StockDetails from './components/StockDetails';
 import HomePage from './components/HomePage';
 import PublicRoute from './components/routes/PublicRoute';
 import PrivateRoute from './components/routes/PrivateRoute';
@@ -23,7 +24,7 @@ const App = () => {
       <BrowserRouter>
         <Switch>
           <PublicRoute restricted={true} component={HomePage} path="/" exact />
-          <PublicRoute component={Dashboard} path="/dashboard" exact />
+          <PublicRoute component={Dashboard} path="/dashboard" />
         </Switch>
       </BrowserRouter>
     </div>
