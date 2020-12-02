@@ -1,12 +1,13 @@
 import React from 'react'
+import { Link } from 'react-router-dom';
 import { Breadcrumb } from 'antd';
 
 const Breadcrumbs = (props) => {
     return (
         <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Main</Breadcrumb.Item>
-            <Breadcrumb.Item>Stock</Breadcrumb.Item>
-            <Breadcrumb.Item>{props.stock ? props.stock : null}</Breadcrumb.Item>
+            <Breadcrumb.Item><Link to={`/dashboard`}>{props.firstCrumb ? props.firstCrumb : null}</Link></Breadcrumb.Item>
+            <Breadcrumb.Item>{props.secondCrumb ? props.secondCrumb : null}</Breadcrumb.Item>
+            <Breadcrumb.Item>{props.thirdCrumb ? props.thirdCrumb : null}</Breadcrumb.Item>
         </Breadcrumb>
     )
 }

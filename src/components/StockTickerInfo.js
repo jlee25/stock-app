@@ -5,7 +5,6 @@ import './styles/stock-ticker-info.less';
 const StockTickerInfo = (props) => {
     const { tickerInfo } = props;  
     const { Title } = Typography;
-    console.log(tickerInfo, 'ticker');
     return (
         <div className="ticker-info-container">
             <Space direction="vertical">

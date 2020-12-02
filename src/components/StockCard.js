@@ -10,7 +10,7 @@ const StockCard = (props) => {
   const { Meta } = Card;
   
   return (
-      !props.loading ?
+      !props.loading && props.stockList.tickerInfo ?
       <Card
           cover={
             <StockChart 
