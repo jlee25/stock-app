@@ -1,28 +1,35 @@
 import React, { useEffect } from 'react'
 import { Link } from 'react-router-dom';
-import { Skeleton, Switch, Card, Avatar, Col, Row, Spin } from 'antd';
+import { Skeleton, Switch, Card, Avatar, Col, Row, Spin, Image } from 'antd';
 import StockChart from './StockChart';
 import './styles/stock-card.less';
 import { convertDateTypeToInteger } from "../utils/CommonFunctions";
 
 const StockCard = (props) => {
-  // const { stocks } = props.stockList
+  const { list, title, description, url, image, type } = props
   const { Meta } = Card;
   
   return (
-      !props.loading && props.stockList.tickerInfo ?
+      !props.loading ?
       <Card
           cover={
+            type === "stock" ?
             <StockChart 
               className="chart-container"
               selectedDateType={convertDateTypeToInteger(props.selectedDateType)} 
-              stockInfo={props.stockList}
+              stockInfo={list}
+            />
+            : 
+            <Image
+              height={250}
+              src={image}
+              alt={title}
             />
           }
       >
-        <Link to={`/dashboard/stock/${props.stockList.tickerInfo.ticker}`}>
-          <Meta title={props.stockList.tickerInfo.ticker} description={props.stockList.tickerInfo.name} />
-        </Link>
+        <a href={url} target={type === "stock" ? "_self" : "_blank"}>
+          <Meta title={title} description={description} />
+        </a>
       </Card>
       :
       <Card>

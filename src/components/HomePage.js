@@ -1,18 +1,22 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { StockOutlined } from '@ant-design/icons';
 import { Row, Col, Input, Form, Button, Typography, Space, Card } from 'antd';
+import { calculateProfitLoss } from '../utils/CommonFunctions';
+import { login } from '../features/authSlice';
 import './styles/homepage.less';
 
 const { Title } = Typography;
 
 const HomePage = () => {
+    const dispatch = useDispatch();
 
     const onFinish = (values) => {
-    console.log('Success:', values);
+        dispatch(login(values.email, values.password));
     };
 
     const onFinishFailed = (errorInfo) => {
-    console.log('Failed:', errorInfo);
+        console.log('Failed:', errorInfo);
     };
 
     return (
@@ -29,12 +33,12 @@ const HomePage = () => {
                             >
                                 <Form.Item
                                     className="homepage-label"
-                                    label="Username"
-                                    name="username"
+                                    label="Email"
+                                    name="email"
                                     rules={[
                                     {
                                         required: true,
-                                        message: 'Please input your username!',
+                                        message: 'Please input your email!',
                                     },
                                     ]}
                                 >

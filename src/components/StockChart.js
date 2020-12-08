@@ -6,7 +6,6 @@ const StockChart = (props) => {
     const { stockInfo } = props;
     const options = {style: 'currency', currency: 'USD'};
     const numberFormat = new Intl.NumberFormat('en-US', options);
-    console.log(stockInfo, 'infoo');
     const configPrice = {
         yAxis: [{
           offset: 20,
@@ -88,8 +87,7 @@ const StockChart = (props) => {
           tooltip: {
             valueDecimals: 2
           },
-    
-        }
+        },
         ]
       };
     return (

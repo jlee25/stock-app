@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Typography, Skeleton, Switch, Card, Avatar, Col, Row, Spin, Carousel, Space } from 'antd';
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
-import { getStocks, selectStock } from '../features/stockSlice';
+import { getStocks, selectStock, getStockNews } from '../features/stockSlice';
 import StockCard from './StockCard';
+import StockNews from './StockNews';
+import './styles/main-content.less';
 
 const MainContent = () => {
   const dispatch = useDispatch();
@@ -20,10 +22,15 @@ const MainContent = () => {
       dispatch(getStocks(selectedDate, selectedStocks));
   }, [selectedDate, selectedStocks])
 
+  useEffect(() => {
+    dispatch(getStockNews());
+  }, [])
+
   const carouselSettings = {
     arrows: true,
     slidesToShow: 3,
     slidesToScroll: 1,
+    dots: true,
     responsive: [
       {
         breakpoint: 1024,
@@ -31,7 +38,6 @@ const MainContent = () => {
           slidesToShow: 2,
           slidesToScroll: 3,
           infinite: true,
-          dots: true
         }
       },
       {
@@ -52,16 +58,23 @@ const MainContent = () => {
     ]
   };
 
+  console.log(stockList, 'stocklisttt');
+
   return (
     <div className="main-stocks">
       <Title level={2}>Top Stocks</Title>
       <div className="stock-card-container">
-          <Carousel {...carouselSettings}>
+        <div>
+          <Carousel {...carouselSettings} >
             {stockList.stocks.map((stock, index) => {
               return (
                   <Space className="stock-card-space" size={8} >
                     <StockCard 
-                      stockList={stock} 
+                      type={'stock'}
+                      list={stock}
+                      title={stock.tickerInfo ? stock.tickerInfo.ticker : ""}
+                      description={stock.tickerInfo ? stock.tickerInfo.name : ""}
+                      url={stock.tickerInfo ? `/dashboard/stock/${stock.tickerInfo.ticker}` : ""}
                       selectedDateType={selectedDate}
                       loading={stockList.loading}
                     />
@@ -69,6 +82,27 @@ const MainContent = () => {
               )
             })} 
           </Carousel>
+        </div>
+      </div>
+      <Title style={{marginTop: "20px"}} level={2}>Latest News</Title>
+      <div className="stock-card-container">
+        <Carousel {...carouselSettings} autoplay={true}>
+          {stockList.news.map((article, index) => {
+            return (
+                <Space className="stock-card-space" size={8} >
+                  <StockCard 
+                    type={'news'}
+                    list={article} 
+                    title={article.title ? article.title : ""}
+                    description={article.description ? article.description : ""}
+                    url={article.url ? article.url : ""}
+                    image={article.urlToImage ? article.urlToImage : ""}
+                    loading={stockList.loading}
+                  />
+                </Space>
+            )
+          })} 
+        </Carousel>
       </div>
     </div>
   );

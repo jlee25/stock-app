@@ -18,6 +18,7 @@ const StockDetails = (props) => {
         dispatch(getStock(params.id));
     }, [params.id])
 
+    console.log(stockList.stock, 'stockkkk');
 
     return (
         <div>
@@ -33,7 +34,9 @@ const StockDetails = (props) => {
                             <StockTickerInfo tickerInfo={stockList.stock.tickerInfo} />
                         </TabPane>
                         <TabPane tab="Calculator" key="2">
-                            <StockCalculator />
+                            <StockCalculator 
+                                stockInfo={stockList.stock.stockInfo}
+                            />
                         </TabPane>
                         <TabPane tab="Contact" key="3">
                         Content of Tab Pane 3
