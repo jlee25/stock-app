@@ -1,13 +1,19 @@
 import React from 'react'
+import { withRouter } from 'react-router'
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { Row, Col, Layout, Menu, Typography } from 'antd';
 import { StockOutlined } from '@ant-design/icons';
+import { logout } from '../features/authSlice';
 import './styles/stock-header.less';
 
 const { Title } = Typography;
 const { Header } = Layout;
 
-const StockHeader = () => {
+const StockHeader = (props) => {
+    const { history } = props;
+    const dispatch = useDispatch();
+
     return (
         <Header className="header">
             <Row>
@@ -21,7 +27,7 @@ const StockHeader = () => {
                 </Col>
                 <Col span={12} >
                     <Menu className="stock-menu" theme="dark" mode="horizontal">
-                        <Menu.Item key="3">Logout</Menu.Item>
+                        <Menu.Item onClick={() => dispatch(logout(history))} key="3">Logout</Menu.Item>
                     </Menu>
                 </Col>
             </Row>
@@ -29,4 +35,4 @@ const StockHeader = () => {
     )
 }
 
-export default StockHeader
+export default withRouter(StockHeader);

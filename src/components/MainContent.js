@@ -4,7 +4,7 @@ import { Typography, Skeleton, Switch, Card, Avatar, Col, Row, Spin, Carousel, S
 import { EditOutlined, EllipsisOutlined, SettingOutlined } from '@ant-design/icons';
 import { getStocks, selectStock, getStockNews } from '../features/stockSlice';
 import StockCard from './StockCard';
-import StockNews from './StockNews';
+import ImageUnavailable from '../assets/image-unavailable.jpg';
 import './styles/main-content.less';
 
 const MainContent = () => {
@@ -58,18 +58,16 @@ const MainContent = () => {
     ]
   };
 
-  console.log(stockList, 'stocklisttt');
-
   return (
     <div className="main-stocks">
-      <Title level={2}>Top Stocks</Title>
+      <Title level={2}>Stocks of the Day</Title>
       <div className="stock-card-container">
         <div>
           <Carousel {...carouselSettings} >
             {stockList.stocks.map((stock, index) => {
               return (
                   <Space className="stock-card-space" size={8} >
-                    <StockCard 
+                    <StockCard
                       type={'stock'}
                       list={stock}
                       title={stock.tickerInfo ? stock.tickerInfo.ticker : ""}
@@ -96,7 +94,7 @@ const MainContent = () => {
                     title={article.title ? article.title : ""}
                     description={article.description ? article.description : ""}
                     url={article.url ? article.url : ""}
-                    image={article.urlToImage ? article.urlToImage : ""}
+                    image={article.urlToImage ? article.urlToImage : ImageUnavailable}
                     loading={stockList.loading}
                   />
                 </Space>

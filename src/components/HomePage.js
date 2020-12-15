@@ -8,11 +8,11 @@ import './styles/homepage.less';
 
 const { Title } = Typography;
 
-const HomePage = () => {
+const HomePage = (props) => {
     const dispatch = useDispatch();
 
     const onFinish = (values) => {
-        dispatch(login(values.email, values.password));
+        dispatch(login(values.email, values.password, props.history));
     };
 
     const onFinishFailed = (errorInfo) => {
