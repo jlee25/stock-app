@@ -24,7 +24,8 @@ const StockCard = (props) => {
     } else if (type === "news") {
       return (
         <Image
-          height={300}
+          height={250}
+          style={{ objectFit: "cover"}}
           src={image}
           alt={title}
         />
@@ -32,9 +33,9 @@ const StockCard = (props) => {
     } else return null
   }
 
-  const updateStockFavs = (id) => {
-    dispatch(updateUserTicker(id))
-    dispatch(getStockFavs());
+  const updateStockFavs = async (id) => {
+    await dispatch(updateUserTicker(id))
+    await dispatch(getStockFavs());
   }
   
   return (
@@ -54,9 +55,9 @@ const StockCard = (props) => {
           {type === "search" ?
             <div className="favourite-icon-container">
                 {favourite ?
-                <StarFilled onClick={() => updateStockFavs(id)} style={{ fontSize: '16px' }} className="favourite-icon" />
+                <StarFilled onClick={() => updateStockFavs(id, title)} style={{ fontSize: '16px' }} className="favourite-icon" />
                 :
-                <StarOutlined onClick={() => updateStockFavs(id)} style={{ fontSize: '16px' }} className="favourite-icon" />
+                <StarOutlined onClick={() => updateStockFavs(id, title)} style={{ fontSize: '16px' }} className="favourite-icon" />
               }
             </div>
           : null }

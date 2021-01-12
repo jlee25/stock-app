@@ -18,6 +18,8 @@ const StockList = (props) => {
         dispatch(searchStock(searchValue));
     }, [searchValue])
 
+    console.log(stockList, 'fewfwe');
+
     return (
         <div className="stock-list-container">
             <Title level={2}>List of Stocks</Title>

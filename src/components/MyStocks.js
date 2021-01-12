@@ -7,14 +7,13 @@ import { selectStock } from '../features/stockSlice';
 
 const MyStocks = () => {
     const stockList = useSelector(selectStock);
-    console.log(stockList, 'stockListtt');
     return (
         !stockList.loading ? 
             stockList.favStocks.length > 0  ?
                 stockList.favStocks.map(stock => {
-                    console.log(stock, 'stockk');
                     return (
                         <MyStocksCard 
+                            list={stock}
                             details={stock.details ? stock.details : []}
                             title={stock.tickerInfo ? stock.tickerInfo.ticker : ""}
                             description={stock.tickerInfo ? stock.tickerInfo.name : ""}
