@@ -4,7 +4,7 @@ import stockReducer from '../features/stockSlice'
 import counterReducer from '../features/counter/counterSlice'
 
 const rootReducer = combineReducers({
-    stock: stockReducer,
+    stockList: stockReducer,
     counter: counterReducer,
 })
 
